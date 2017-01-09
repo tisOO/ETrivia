@@ -195,7 +195,6 @@ class ETrivia(object):
         if ctx.invoked_subcommand is None:
             msg = "```\n"
             msg += "```\n"
-        await self.bot.say("Etrivia")
 
     @etrivia.command()
     @checks.mod_or_permissions(administrator=True)
@@ -395,10 +394,9 @@ class TriviaSession(object):
 
     async def end_game(self):
         self.status = "stop"
-        best_player = max(self.score_list.items(), key=operator.itemgetter(1))[0]
-        self.save_or_update_user(self.server_id, best_player, 0, 0, 1)
-
         if self.score_list:
+            best_player = max(self.score_list.items(), key=operator.itemgetter(1))[0]
+            self.save_or_update_user(self.server_id, best_player, 0, 0, 1)
             await self.send_table()
         etrivia_manager.etrivia_sessions.remove(self)
 
